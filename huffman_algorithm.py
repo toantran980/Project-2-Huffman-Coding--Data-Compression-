@@ -37,7 +37,7 @@ def build_codes(node, prefix="", code_map={}):
     build_codes(node.left, prefix + "0", code_map) #left child(0)
     build_codes(node.right, prefix + "1", code_map) #right child(1)
 
-    return code_map
+    return code_map 
 
 # Step 4: Compute Huffman Encoding
 def huffman_encode(text):

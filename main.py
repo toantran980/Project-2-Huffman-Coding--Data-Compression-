@@ -6,14 +6,11 @@ def main():
     file = File()
     text = file.read_file("input.txt")# Read the input file
 
-    # Count characters frequencies
-    '''char_count = file.freq_count()
-    char_count = sorted(char_count.items(), key=lambda item: item[1])
-    print("\nCharacter Frequency Count: ", char_count)'''
-
     # Build Huffman Tree and binary translation
     encoded_text, huffman_codes = huffman_encode(text)
-    print("\nHuffman Codes: ", huffman_codes)
+    print("\nHuffman Codes:")
+    for char, code in huffman_codes.items():
+        print(f"'{char}': {code}")
     print("\nEncoded Text: ", encoded_text)
 
     # Compress the encoded text and save to a file
@@ -25,7 +22,6 @@ def main():
 
     # Compare the sizes of the original and compressed files
     file.compare_files_size("input.txt", "compressed.bin")
-
 
 if __name__ == "__main__":
     main()
