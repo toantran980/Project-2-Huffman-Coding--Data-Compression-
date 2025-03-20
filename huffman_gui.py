@@ -142,7 +142,6 @@ def grab_bin_info(file_path):
     file_extension = ".txt"
     file_type_name = "h_codes"
 
-    ####Possible bugged code: start - Robbie
     bin_data = read_bin_file(file_path)
     bin_data = bytes_to_bit_string(bin_data)
 
@@ -154,13 +153,10 @@ def grab_bin_info(file_path):
 
     full_huffman_code_filepath = str(absolute_hcode_directory_path) + "/" +  huffman_code_filename
 
-    #Bug suspect vvvvvvvvvvvvvvvvvvvvvvvvvvvv
     list_of_code_dicts = read_lines(full_huffman_code_filepath)
-    ####Possible bugged code: end - Robbie
 
 
     decoded_text = algo.huffman_decode(bin_data,list_of_code_dicts)
-    ####Possible bug suspect, but I dont think the issue is here ^^^^^^
 
     return decoded_text
 
