@@ -114,6 +114,8 @@ def file_select(compress_or_decompress, output_field, bytesize_label_obj = None)
         print(f"Huffman Code Strings: {huffman_codes_string}")
 
         write_txt_file(huffman_codes_output_filepath,huffman_codes_string)
+        ###From what I can tell code is bug free until here - Robbie
+        print(f"Writing Huffman Codes To Filepath: {huffman_codes_output_filepath}")
 
         size_tuple = get_bytesizes(current_filepath,output_filepath)
         ratio = calculate_ratio(size_tuple[0],size_tuple[1])
@@ -140,6 +142,7 @@ def grab_bin_info(file_path):
     file_extension = ".txt"
     file_type_name = "h_codes"
 
+    ####Possible bugged code: start - Robbie
     bin_data = read_bin_file(file_path)
     bin_data = bytes_to_bit_string(bin_data)
 
@@ -151,9 +154,13 @@ def grab_bin_info(file_path):
 
     full_huffman_code_filepath = str(absolute_hcode_directory_path) + "/" +  huffman_code_filename
 
+    #Bug suspect vvvvvvvvvvvvvvvvvvvvvvvvvvvv
     list_of_code_dicts = read_lines(full_huffman_code_filepath)
+    ####Possible bugged code: end - Robbie
+
 
     decoded_text = algo.huffman_decode(bin_data,list_of_code_dicts)
+    ####Possible bug suspect, but I dont think the issue is here ^^^^^^
 
     return decoded_text
 
