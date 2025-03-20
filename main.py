@@ -4,7 +4,7 @@ from file_processor import*
 # Main function to demonstrate encoding and decoding
 def main():
     file = File()
-    text = file.read_file("input.txt")# Read the input file
+    text = file.read_file("input.txt")# Read the input filecls
 
     # Build Huffman Tree and binary translation
     encoded_text, huffman_codes = huffman_encode(text)
