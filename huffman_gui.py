@@ -173,14 +173,11 @@ def write_txt_file(file_path, data):
     with open(file_path, 'w') as file:
         file.write(data)
 
-
-
-
 def read_bin_file(file_path):
-
 
     with open(file_path, 'rb') as file:
         return file.read()
+
 
 def find_huffman_codes(filepath):
     

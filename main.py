@@ -1,4 +1,4 @@
-from huffman_algorithm import*
+"""from huffman_algorithm import*
 from file_processor import*
 
 # Main function to demonstrate encoding and decoding
@@ -14,7 +14,7 @@ def main():
     print("\nEncoded Text: ", encoded_text)
 
     # Compress the encoded text and save to a file
-    encoded_text = file.compressed_file("compressed.bin", encoded_text)
+    #encoded_text = file.compressed_file("compressed.bin", encoded_text)
     
     # Decoded the text
     decoded_text = huffman_decode(encoded_text, huffman_codes)
@@ -24,4 +24,4 @@ def main():
     file.compare_files_size("input.txt", "compressed.bin")
 
 if __name__ == "__main__":
-    main()
+    main()"""
