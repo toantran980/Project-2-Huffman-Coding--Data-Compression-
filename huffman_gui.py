@@ -93,10 +93,11 @@ def file_select(compress_or_decompress, output_field, bytesize_label_obj = None)
 
         bytesize_string = f"Original Size: 0 Bytes | Compressed Size: 0 Bytes | Ratio: 0.0%"
         encoded_text, huffman_codes = encode_and_grab_info(current_filepath)
-        
+        huffman_codes_string = '\n'.join(f"'{key}': {value}" for key, value in huffman_codes.items())
+
         #deleting what is currently in output field and then inserting the huffman codes
         output_field.delete("1.0", tk.END)
-        output_field.insert(tk.END, huffman_codes)
+        output_field.insert(tk.END, huffman_codes_string)
 
         #writing encoded data to .bin file
         output_filepath = get_output_file_path(_result_directory_path, "encoded", current_time_string, ".bin")
@@ -109,7 +110,7 @@ def file_select(compress_or_decompress, output_field, bytesize_label_obj = None)
         #writing huffman codes to a txt file
         huffman_codes_output_filepath = get_output_file_path(_huffman_codes_directory_path, "h_codes", current_time_string, ".txt")
 
-        huffman_codes_string = '\n'.join(f'{key}: {value}' for key, value in huffman_codes.items())
+        huffman_codes_string = '\n'.join(f"'{key}': {value}" for key, value in huffman_codes.items())
         print(f"Huffman Code Strings: {huffman_codes_string}")
 
         write_txt_file(huffman_codes_output_filepath,huffman_codes_string)
@@ -172,7 +173,7 @@ def get_output_file_path(directory_path, file_name, creation_time, extension):
 def write_txt_file(file_path, data):
     with open(file_path, 'w') as file:
         file.write(data)
-
+    
 def read_bin_file(file_path):
 
     with open(file_path, 'rb') as file:
@@ -195,7 +196,7 @@ def read_lines(filepath):
 
     with open(filepath, 'r') as file:
         for line in file:
-            stripped_line = line.strip() 
+            stripped_line = line.strip('\n') 
             line_char_and_code_list = stripped_line.split(':')
             line_char_and_code_list[1] = line_char_and_code_list[1].strip()
             code_dict[line_char_and_code_list[0]] = line_char_and_code_list[1]
@@ -317,8 +318,6 @@ uncomp_file_text.grid(row=7, column=0)
 decompress_button = tk.Button(frame, text="Decompress File", command=lambda: file_select(0,uncomp_file_text))
 decompress_button.grid(row=5, column=0)
 #--------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 #Exit button
 """ exit_button = tk.Button(frame, text="Exit", command=root.destroy)

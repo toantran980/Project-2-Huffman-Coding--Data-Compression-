@@ -31,8 +31,4 @@ class File:
         original_size = os.path.getsize(original_file_path) # Get the size of the input file in bytes
         compressed_size = os.path.getsize(compressed_file_path) # Get the size of the compressed file in bytes
         
-        #print("\nComparison size of input file and compression file...")
-        #print(f"Original file size: {original_size} bytes")
-        #print(f"Compressed file size: {compressed_size} bytes\n")
-        
         return original_size, compressed_size
