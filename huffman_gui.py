@@ -1,3 +1,7 @@
+#Author: Robbie Robertson
+#Code Updated: 03/19/2025
+#Purpose: Originally just gui, now really like half of the back end too 
+
 import tkinter as tk
 from tkinter import filedialog
 import huffman_algorithm as algo
@@ -67,14 +71,14 @@ def file_select(compress_or_decompress, output_field, bytesize_label_obj = None)
 
 #        text_in_file = File.read_file(current_filepath)
 #        encoded_text, huffman_codes = algo.huffman_encode(text_in_file)
-        encoded_text, huffman_codes = encode_and_grab_info(current_filepath)
+        decoded_text = grab_bin_info(current_filepath)
 
         #deleting what is currently in output field and then inserting the huffman codes
         output_field.delete("1.0", tk.END)
-        output_field.insert(tk.END, encoded_text)
+        output_field.insert(tk.END, decoded_text)
 
 
-        return encoded_text
+        return decoded_text
 
     #compress_or_decompress == 1, if so it will compress the file selected by user
     #also updates the output field for the decoded huffman encoded file
@@ -135,11 +139,31 @@ def encode_and_grab_info(filepath):
     return encoded_text, huffman_codes
 
 def grab_bin_info(file_path):
+    file_obj = File()
+    file_extension = ".txt"
+    file_type_name = "h_codes"
 
     bin_data = read_bin_file(file_path)
-    algo.huffman_decode(bin_data)
+    bin_data = bytes_to_bit_string(bin_data)
 
-    return 
+    huffman_code_time_signature = find_huffman_codes(file_path)
+    huffman_code_filename = file_type_name + "_" + huffman_code_time_signature + "_" + file_extension
+    code_directory = Path(_huffman_codes_directory_path)
+    path = Path(_huffman_codes_directory_path)
+    absolute_hcode_directory_path = path.resolve()
+
+    full_huffman_code_filepath = str(absolute_hcode_directory_path) + "/" +  huffman_code_filename
+
+    list_of_code_dicts = read_lines(full_huffman_code_filepath)
+
+    decoded_text = algo.huffman_decode(bin_data,list_of_code_dicts)
+
+    return decoded_text
+
+
+def bytes_to_bit_string(data: bytes) -> str:
+    # Convert each byte to its 8-bit binary representation and join them into a single string
+    return ''.join(f'{byte:08b}' for byte in data)
 
 def get_output_file_path(directory_path, file_name, creation_time, extension):
 
@@ -157,9 +181,34 @@ def write_txt_file(file_path, data):
 
 
 def read_bin_file(file_path):
+
+
     with open(file_path, 'rb') as file:
         return file.read()
 
+def find_huffman_codes(filepath):
+    
+    packed_data = filepath.split("_")
+
+    #filtered_data = [x for x in packed_data if x > 1] huffman_code_filepath
+
+    time_signature_str = packed_data[1] + "_" + packed_data[2] + "_" + packed_data[3] + "_" + packed_data[4]
+    print(f"Time Signature for selected bin file, will now search for associated huffman codes for signature: {time_signature_str}")
+
+    return time_signature_str
+
+def read_lines(filepath):
+    code_dict = {}
+
+    with open(filepath, 'r') as file:
+        for line in file:
+            stripped_line = line.strip() 
+            line_char_and_code_list = stripped_line.split(':')
+            line_char_and_code_list[1] = line_char_and_code_list[1].strip()
+            code_dict[line_char_and_code_list[0]] = line_char_and_code_list[1]
+            #code_dict_list.append((line_char_and_code_list[0],line_char_and_code_list[1]))
+
+    return code_dict
 
 ####Variables
 long_text = """
