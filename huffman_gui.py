@@ -114,7 +114,6 @@ def file_select(compress_or_decompress, output_field, bytesize_label_obj = None)
         print(f"Huffman Code Strings: {huffman_codes_string}")
 
         write_txt_file(huffman_codes_output_filepath,huffman_codes_string)
-        ###From what I can tell code is bug free until here - Robbie
         print(f"Writing Huffman Codes To Filepath: {huffman_codes_output_filepath}")
 
         size_tuple = get_bytesizes(current_filepath,output_filepath)
